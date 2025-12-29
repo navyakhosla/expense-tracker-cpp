@@ -1,35 +1,27 @@
 📊 Expense Tracker (C++)
-A simple menu-driven application to manage and analyze expenses across multiple accounts.
+  This is a menu-driven Expense Tracker in C++ that helps users manage and analyze expenses across multiple accounts .The project is designed using Object-Oriented Programming and STL containers.
 
 ✨ Features
-📥 Add Expenses: Support for multiple entries across different account IDs.
+  📥 Add multiple expenses (same or different account IDs)
+  👀View all expenses for a specific account
+   🔍Filter expenses:
+     By category
+     By amount range
+  📑View transactions category-wise
 
-👀 View History: Display all transactions for a specific account.
-
-🔍 Search & Filter: * Filter transactions by Category.
-
-Filter transactions by Amount Range (Min to Max).
-
-📑 Analysis: View transaction history organized by category-wise groups.
-
-🚪 Easy Exit: Cleanly close the program using the menu.
-
-🧠 Concepts Used
-Object-Oriented Programming: Uses Classes and Encapsulation to manage data.
-
-Enum Classes: Used for organizing expense categories safely.
-
-STL Containers: * vector for storing lists of expenses.
-
-unordered_map for mapping account IDs to their transactions.
+🧠Concepts Used
+  🧱Object-Oriented Programming (Classes & Encapsulation). 
+  🏷 enum class for expense categories
+  📦 STL Containers:
+     vector for storing expense amounts
+     unordered_map for account-wise expense tracking
 
 ▶️ How It Works
-The program runs in a loop, displaying a menu of 5 options.
+  1. The program displays a menu repeatedly.
+  2. User selects an option.
+  3. Expenses are stored account-wise.
+  4. Filters help analyze spending.
+  5. Program exits when Option 5 is selected.
+    
+  
 
-User selects an option by entering a number (1-5).
-
-Expenses are stored in memory based on the Account ID provided.
-
-Use filters to find specific spending patterns.
-
-Select Option 5 to stop the program.
