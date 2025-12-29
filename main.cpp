@@ -58,6 +58,67 @@ public:
             }
         }
     }
+    void filter_by_category(int id, Category cat)
+    {
+        if (expenses.find(id) == expenses.end())
+        {
+            cout << "no expense for this id" << endl;
+        }
+        bool find = false;
+        for (Expense e : expenses[id])
+        {
+            if (e.getcategory() == cat)
+            {
+                cout << "amount : " << e.getamount() << endl;
+                find = true;
+            }
+        }
+        if (!find)
+        {
+            cout << "no expenses for this category";
+        }
+    }
+    void filter_by_range(int id, float max, float min)
+    {
+        if (expenses.find(id) == expenses.end())
+        {
+            cout << "no expense for this category" << endl;
+        }
+        bool find = false;
+        for (Expense e : expenses[id])
+        {
+            if (e.getamount() <= max && e.getamount() >= min)
+            {
+                cout << "Amount is" << e.getamount() << endl;
+                find = true;
+            }
+        }
+        if (!find)
+        {
+            cout << "no expenses in this range";
+        }
+    }
+    void view_transactions(int id)
+    {
+        if (expenses.find(id) == expenses.end())
+        {
+            cout << "no transactions for this account" << endl;
+        }
+        unordered_map<string, vector<float>> transactions;
+        for (Expense e : expenses[id])
+        {
+            string s = category_to_string(e.getcategory());
+            transactions[s].push_back(e.getamount());
+        }
+        for (auto &p : transactions)
+        {
+            cout << "category is :" << p.first << endl;
+            for (int amount : p.second)
+            {
+                cout << "amount : " << amount << endl;
+            }
+        }
+    }
 };
 Category string_to_category(string s)
 {
@@ -95,32 +156,78 @@ int main()
 {
     Expense_Tracker t1;
     int option;
-    cout << "* * * * Expense Tracker * * * * " << endl;
-    cout << "option 1 - Add expense" << endl;
-    cout << "option 2 - View expense" << endl;
-    cin >> option;
-    if (option == 1)
+    while (true)
     {
-        int account_id;
-        float amount;
-        string category;
-        int n;
-        cout << "enter account number";
-        cin >> account_id;
-        cout<<"how many expenses do you want to add";
-        cin>>n;
-        for(int i=0;i<n;i++){
-        cout << "enter amount";
-        cin >> amount;
-        cout << "enter category- food,rent,education,medical,travel,shopping";
-        cin >> category;
-        t1.add_new_expense(account_id, amount, string_to_category(category));
-    }}
-    else if (option == 2)
-    {
-        int account_Id;
-        cout << "enter account number";
-        cin >> account_Id;
-        t1.view_expense(account_Id);
+        cout << "* * * * Expense Tracker * * * * " << endl;
+        cout << "option 1 - Add expense" << endl;
+        cout << "option 2 - View expense" << endl;
+        cout << "option 3 - Filter Expenses" << endl;
+        cout << "option 4 - View Transactions" << endl;
+        cout << "option 5 - Exit" << endl;
+        cin >> option;
+        if (option == 1)
+        {
+            int account_id;
+            float amount;
+            string category;
+            int n;
+            cout << "how many expenses do you want to add : ";
+            cin >> n;
+            for (int i = 0; i < n; i++)
+            {
+                cout << "enter account number : ";
+                cin >> account_id;
+                cout << "enter amount : ";
+                cin >> amount;
+                cout << "enter category- food,rent,education,medical,travel,shopping : ";
+                cin >> category;
+                t1.add_new_expense(account_id, amount, string_to_category(category));
+            }
+        }
+        else if (option == 2)
+        {
+            int account_Id;
+            cout << "enter account number : ";
+            cin >> account_Id;
+            t1.view_expense(account_Id);
+        }
+        else if (option == 3)
+        {
+            int account_id;
+            cout << "enter account id : ";
+            cin >> account_id;
+            int f_option = 0;
+            cout << "option 1 - Filter by category" << endl;
+            cout << "option 2 - Filter by range" << endl;
+            cin >> f_option;
+            if (f_option == 1)
+            {
+                string cate;
+                cout << "enter category(food,rent,education,shopping,medical,travel) : " << endl;
+                cin >> cate;
+                t1.filter_by_category(account_id, string_to_category(cate));
+            }
+            else if (f_option == 2)
+            {
+                float min_range, max_range;
+                cout << "enter minimum range : ";
+                cin >> min_range;
+                cout << "enter maximum range : ";
+                cin >> max_range;
+                t1.filter_by_range(account_id, min_range, max_range);
+            }
+        }
+        else if (option == 4)
+        {
+            int account_id;
+            cout << "enter account_id : " << endl;
+            cin >> account_id;
+            // t1.view_transactions(account_id);
+        }
+        else if (option == 5)
+        {
+            cout << "* Exiting......... bye bye....*" << endl;
+            break;
+        }
     }
 }
