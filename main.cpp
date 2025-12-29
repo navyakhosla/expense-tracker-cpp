@@ -101,17 +101,21 @@ int main()
     cin >> option;
     if (option == 1)
     {
-        int account_Id;
+        int account_id;
         float amount;
         string category;
+        int n;
         cout << "enter account number";
-        cin >> account_Id;
+        cin >> account_id;
+        cout<<"how many expenses do you want to add";
+        cin>>n;
+        for(int i=0;i<n;i++){
         cout << "enter amount";
         cin >> amount;
         cout << "enter category- food,rent,education,medical,travel,shopping";
         cin >> category;
-        t1.add_new_expense(account_Id, amount, string_to_category(category));
-    }
+        t1.add_new_expense(account_id, amount, string_to_category(category));
+    }}
     else if (option == 2)
     {
         int account_Id;
