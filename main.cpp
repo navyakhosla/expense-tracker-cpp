@@ -76,6 +76,11 @@ public:
     }
     void add_new_expense(int id, float amount, Category category)
     {
+        if (amount <= 0)
+        {
+            cout << "Invalid amount. Expense not added" << endl;
+            return;
+        }
         Expense e(amount, category);
         expenses[id].push_back(e);
         add_to_file();
@@ -90,9 +95,11 @@ public:
         }
         for (Expense &e : p->second)
         {
+            cout << "----------" << endl;
+            cout << "Account Id is : " << id << endl;
             cout << "Category : " << category_to_string(e.getcategory()) << "\n";
             cout << "Amount : " << e.getamount() << endl;
-            cout << "--------------" << endl;
+            cout << "----------" << endl;
         }
     }
     void filter_by_category(int id, Category cat)
@@ -108,7 +115,10 @@ public:
         {
             if (e.getcategory() == cat)
             {
+                cout << "----------" << endl;
+                cout << "id is : " << id << endl;
                 cout << "amount : " << e.getamount() << endl;
+                cout << "----------";
                 find = true;
             }
         }
@@ -117,7 +127,7 @@ public:
             cout << "no expenses for this category";
         }
     }
-    void filter_by_range(int id, float max, float min)
+    void filter_by_range(int id, float min, float max)
     {
         auto p = expenses.find(id);
         if (p == expenses.end())
@@ -130,7 +140,10 @@ public:
         {
             if (e.getamount() <= max && e.getamount() >= min)
             {
+                cout << "----------" << endl;
+                cout << "accoutn id is : " << id << endl;
                 cout << "Amount is" << e.getamount() << endl;
+                cout << "----------";
                 find = true;
             }
         }
@@ -157,7 +170,7 @@ public:
         for (auto &p : transactions)
         {
             cout << "category is :" << p.first << endl;
-            for (int amount : p.second)
+            for (float amount : p.second)
             {
                 cout << "amount : " << amount << endl;
             }
@@ -268,17 +281,22 @@ int main()
             int account_id;
             cout << "enter account_id : " << endl;
             cin >> account_id;
-            // t1.view_transactions(account_id);
+            t1.view_transactions(account_id);
         }
         else if (option == 5)
         {
-            cout << "* Exiting......... bye bye....*" << endl;
+            cout << "\n====================================" << endl;
+            cout << "  Thank you for using Expense Tracker" << endl;
+            cout << "        Exiting... Goodbye!" << endl;
+            cout << "====================================\n"
+                 << endl;
             break;
         }
         else if (option == 6)
         {
             int n;
-            cout << "do you want to delete all tha data? "<<"\n"<<"choose 1 for yes else choose 2" << endl;
+            cout << "do you want to delete all tha data? " << "\n"
+                 << "choose 1 for yes else choose 2" << endl;
             cin >> n;
             if (n == 1)
             {
