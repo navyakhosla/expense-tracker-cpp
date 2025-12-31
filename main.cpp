@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <fstream>
 using namespace std;
 enum class Category
 {
@@ -34,35 +35,73 @@ public:
     }
 };
 string category_to_string(Category s);
+Category string_to_category(string s);
 class Expense_Tracker
 {
     unordered_map<int, vector<Expense>> expenses;
 
 public:
+    void reset_data()
+    {
+        expenses.clear(); // clear the data from the map
+        ofstream out("expense.txt", ios::trunc);
+        out.close();
+    }
+    void add_to_file()
+    {
+        ofstream out("expense.txt");
+        for (auto &p : expenses)
+        {
+            int id = p.first;
+            for (Expense e : p.second)
+            {
+                out << id << " ";
+                out << e.getamount() << " ";
+                out << category_to_string(e.getcategory()) << endl;
+            }
+        }
+        out.close();
+    }
+    void load_file()
+    {
+        ifstream in("expense.txt");
+        int id;
+        float amount;
+        string category;
+        while (in >> id >> amount >> category)
+        {
+            expenses[id].push_back(Expense(amount, string_to_category(category)));
+        }
+        in.close();
+    }
     void add_new_expense(int id, float amount, Category category)
     {
         Expense e(amount, category);
         expenses[id].push_back(e);
+        add_to_file();
     }
     void view_expense(int id)
     {
-        for (auto &p : expenses)
+        auto p = expenses.find(id);
+        if (p == expenses.end())
         {
-            if (p.first == id)
-            { // p.first=key that is the accountId,p.second=value that is the vector<expense>
-                for (Expense e : p.second)
-                {
-                    cout << "The amount is :" << e.getamount() << endl;
-                    cout << "The category is :" << category_to_string(e.getcategory()) << endl;
-                }
-            }
+            cout << "no expenses for this account" << "\n";
+            return;
+        }
+        for (Expense &e : p->second)
+        {
+            cout << "Category : " << category_to_string(e.getcategory()) << "\n";
+            cout << "Amount : " << e.getamount() << endl;
+            cout << "--------------" << endl;
         }
     }
     void filter_by_category(int id, Category cat)
     {
-        if (expenses.find(id) == expenses.end())
+        auto p = expenses.find(id);
+        if (p == expenses.end())
         {
-            cout << "no expense for this id" << endl;
+            cout << "no expenses for this id";
+            return;
         }
         bool find = false;
         for (Expense e : expenses[id])
@@ -80,9 +119,11 @@ public:
     }
     void filter_by_range(int id, float max, float min)
     {
-        if (expenses.find(id) == expenses.end())
+        auto p = expenses.find(id);
+        if (p == expenses.end())
         {
-            cout << "no expense for this category" << endl;
+            cout << "no expenses for this id";
+            return;
         }
         bool find = false;
         for (Expense e : expenses[id])
@@ -100,10 +141,13 @@ public:
     }
     void view_transactions(int id)
     {
-        if (expenses.find(id) == expenses.end())
+        auto p = expenses.find(id);
+        if (p == expenses.end())
         {
-            cout << "no transactions for this account" << endl;
+            cout << "no expenses for this id";
+            return;
         }
+
         unordered_map<string, vector<float>> transactions;
         for (Expense e : expenses[id])
         {
@@ -155,6 +199,7 @@ string category_to_string(Category s)
 int main()
 {
     Expense_Tracker t1;
+    t1.load_file();
     int option;
     while (true)
     {
@@ -164,6 +209,7 @@ int main()
         cout << "option 3 - Filter Expenses" << endl;
         cout << "option 4 - View Transactions" << endl;
         cout << "option 5 - Exit" << endl;
+        cout << "option 6 - Reset Data" << endl;
         cin >> option;
         if (option == 1)
         {
@@ -228,6 +274,20 @@ int main()
         {
             cout << "* Exiting......... bye bye....*" << endl;
             break;
+        }
+        else if (option == 6)
+        {
+            int n;
+            cout << "do you want to delete all tha data? "<<"\n"<<"choose 1 for yes else choose 2" << endl;
+            cin >> n;
+            if (n == 1)
+            {
+                t1.reset_data();
+            }
+            else
+            {
+                cout << "Data was not deleted";
+            }
         }
     }
 }
