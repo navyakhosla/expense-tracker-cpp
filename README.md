@@ -1,73 +1,55 @@
-#📊 Expense Tracker (C++)
-  This is a menu-driven Expense Tracker in C++ that helps users manage and analyze expenses across multiple accounts .The project is designed using Object-Oriented Programming and STL containers.
+# EXPENSE TRACKER
 
 
-#✨ Features
+###### This is a menu-driven Expense Tracker in C++ that helps users manage and analyze expenses across multiple accounts .The project is designed using Object-Oriented Programming and STL containers.
 
-📥 Add multiple expenses (same or different account IDs)
 
-👀 View all expenses for a specific account
+## ✨ Features
 
-🔍 Filter expenses:
+**📥 Add multiple expenses (same or different account IDs)**.  
+**👀 View all expenses for a specific account**.  
+**🔍 Filter expenses:**  
+-By category   
+-By amount range.  
+**📑 View transactions category-wise.**  
+**💾 Persistent storage using files (data remains after restarting the program)**.  
+**♻️ Reset all stored data (in-memory and file)**
 
-By category
 
-By amount range
 
-📑 View transactions category-wise
+## 🧠 Concepts Used
 
-💾 Persistent storage using files (data remains after restarting the program)
+**🧱 Object-Oriented Programming (Classes & Encapsulation).**  
+**🏷 enum class for expense categories.**  
+**📦 STL Containers:**   
+-vector to store expenses.  
+-unordered_map for account-wise expense tracking.  
+**📂 File Handling:**   
+-Save expenses to a file.  
+-Load expenses on program start.  
+**✅ Input validation (prevents invalid expenses)**
 
-♻️ Reset all stored data (in-memory and file)
 
-#🧠 Concepts Used
+### ▶️ How It Works
 
-🧱 Object-Oriented Programming (Classes & Encapsulation)
+**1. The program loads previously saved expenses from a file**.  
+**2. A menu is displayed repeatedly to the user**.  
+**3. The user selects an option-**.  
+-Add expense.  
+-View expenses.  
+-Filter expenses.  
+-View transactions.  
+-Reset data   
+-Exit.  
+**4. Expenses are stored account-wise using an unordered_map**.  
+**5. Any changes are saved to a file automatically**.  
+**6. The program exits when the user chooses the exit option**.  
 
-🏷 enum class for expense categories
 
-📦 STL Containers:
+## 📁 File Structure
 
-vector to store expenses
 
-unordered_map for account-wise expense tracking
+**expense.txt** — Stores all expense data persistently.  
+**main.cpp** — Contains the complete implementation.
 
-📂 File Handling:
 
-Save expenses to a file
-
-Load expenses on program start
-
-✅ Input validation (prevents invalid expenses)
-
-#▶️ How It Works
-
-The program loads previously saved expenses from a file.
-
-A menu is displayed repeatedly to the user.
-
-The user selects an option:
-
-Add expense
-
-View expenses
-
-Filter expenses
-
-View transactions
-
-Reset data
-
-Exit
-
-Expenses are stored account-wise using an unordered_map.
-
-Any changes are saved to a file automatically.
-
-The program exits when the user chooses the exit option.
-
-📁 File Structure
-
-expense.txt — Stores all expense data persistently
-
-main.cpp — Contains the complete implementation
